@@ -1,81 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>For My Love ❤️</title>
+<div id="hearts-container"></div>
 
-    <style>
-        body{
-            background: linear-gradient(to right, #ffdde1, #ee9ca7);
-            font-family: Arial;
-            text-align: center;
-            padding-top: 60px;
-            color: #333;
-        }
+<script>
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.style.position = "fixed";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "-10px";
+    heart.style.fontSize = Math.random() * 20 + 10 + "px";
+    heart.style.opacity = Math.random();
+    heart.style.animation = "fall 4s linear";
 
-        h1{
-            color: #ff1493;
-            font-size: 40px;
-        }
+    document.body.appendChild(heart);
 
-        img{
-            border-radius: 20px;
-            margin: 20px 0;
-            box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
-            transition: 0.5s;
-        }
+    setTimeout(() => {
+        heart.remove();
+    }, 4000);
+}
 
-        img:hover{
-            transform: scale(1.05);
-        }
+setInterval(createHeart, 300);
+</script>
 
-        p{
-            font-size: 18px;
-        }
-
-        button{
-            padding: 15px 30px;
-            font-size: 18px;
-            background: #ff1493;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.3s;
-        }
-
-        button:hover{
-            background: #e60073;
-            transform: scale(1.05);
-        }
-
-        .hearts{
-            font-size: 30px;
-            animation: float 3s infinite;
-            margin-top: 30px;
-        }
-
-        @keyframes float {
-            0% {transform: translateY(0px);}
-            50% {transform: translateY(-20px);}
-            100% {transform: translateY(0px);}
-        }
-    </style>
-</head>
-
-<body>
-
-<h1>Welcome My Love ❤️</h1>
-
-<img src="wife.png" alt="My Love" width="300">
-
-<p>This website is made only for the most special person in my life.</p>
-
-<button onclick="window.location='login.html'">
-Know More About Me
-</button>
-
-<div class="hearts">❤️ 💖 💕 💗 💓</div>
-
-</body>
-</html>
+<style>
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+</style>
