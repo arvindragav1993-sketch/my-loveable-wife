@@ -1,82 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>For My Love ❤️</title>
+<meta charset="UTF-8">
+<title>For My Love ❤️</title>
 
-    <style>
-        body{
-            background: linear-gradient(to right, #ffdde1, #ee9ca7);
-            font-family: Arial;
-            text-align: center;
-            padding-top: 60px;
-            color: #333;
-            margin: 0;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(to right, #ffdde1, #ee9ca7);
+    overflow-x: hidden;
+}
 
-        h1{
-            color: #ff1493;
-            font-size: 40px;
-        }
+/* LOGIN BOX */
+#loginBox {
+    margin-top: 120px;
+}
 
-        img{
-            border-radius: 20px;
-            margin: 20px 0;
-            box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
-            transition: 0.5s;
-        }
+input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
 
-        img:hover{
-            transform: scale(1.05);
-        }
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #ff1493;
+    color: white;
+    transition: 0.3s;
+}
 
-        p{
-            font-size: 18px;
-        }
+button:hover {
+    transform: scale(1.05);
+    background: #e60073;
+}
 
-        button{
-            padding: 15px 30px;
-            font-size: 18px;
-            background: #ff1493;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.3s;
-        }
+/* MAIN CONTENT */
+#main {
+    display: none;
+    padding-top: 60px;
+}
 
-        button:hover{
-            background: #e60073;
-            transform: scale(1.05);
-        }
+h1 {
+    color: #ff1493;
+    font-size: 40px;
+}
 
-        .hearts {
-            font-size: 30px;
-            margin-top: 20px;
-            animation: float 2s infinite ease-in-out;
-        }
+p {
+    font-size: 18px;
+}
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-    </style>
+/* IMAGE */
+img {
+    width: 280px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transition: 0.5s;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* HEARTS */
+.heart {
+    position: fixed;
+    top: -10px;
+    color: red;
+    font-size: 20px;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+/* TYPING TEXT */
+#typing {
+    font-size: 20px;
+    margin-top: 10px;
+    color: #333;
+    min-height: 30px;
+}
+
+/* MUSIC BUTTON */
+#musicBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+</style>
 </head>
 
 <body>
 
+<!-- LOGIN -->
+<div id="loginBox">
+    <h2>Enter Password 💖</h2>
+    <input type="password" id="pass" placeholder="Password">
+    <br>
+    <button onclick="checkPassword()">Enter</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
     <h1>Welcome My Love ❤️</h1>
 
-    <img src="wife.png" alt="My Love" width="300">
+    <img src="wife.png" alt="love">
 
-    <p>This website is made only for the most special person in my life.</p>
+    <div id="typing"></div>
 
-    <div class="hearts">❤️ 💖 💕 💗 💓</div>
+    <p>This website is made only for the most special person in my life 💕</p>
 
-    <button onclick="window.location='login.html'">
-        Know More About Me
-    </button>
+    <div>❤️ 💖 💕 💗 💓</div>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+    <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn" onclick="toggleMusic()">🎵 Play Music</button>
+
+<script>
+// PASSWORD
+function checkPassword() {
+    let pass = document.getElementById("pass").value;
+
+    if(pass === "love123") {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("main").style.display = "block";
+        startTyping();
+        startHearts();
+    } else {
+        alert("Wrong password ❤️ Try again");
+    }
+}
+
+// TYPING EFFECT
+let text = "You are the most beautiful part of my life ❤️";
+let i = 0;
+
+function startTyping() {
+    let typingDiv = document.getElementById("typing");
+
+    function type() {
+        if(i < text.length) {
+            typingDiv.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 60);
+        }
+    }
+    type();
+}
+
+// HEART ANIMATION
+function startHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 10 + "px";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }, 200);
+}
+
+// MUSIC CONTROL
+function toggleMusic() {
+    let music = document.getElementById("music");
+
+    if(music.paused) {
+        music.play();
+    } else {
+        music.pause();
+    }
+}
+</script>
 
 </body>
 </html>
