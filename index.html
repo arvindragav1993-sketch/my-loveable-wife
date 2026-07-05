@@ -14,7 +14,7 @@ body {
     color: white;
 }
 
-/* CINEMATIC BACKGROUND VIDEO */
+/* BACKGROUND VIDEO */
 #bgVideo {
     position: fixed;
     right: 0;
@@ -25,7 +25,7 @@ body {
     z-index: -1;
 }
 
-/* CENTER CONTENT */
+/* MAIN CONTAINER */
 .container {
     height: 100vh;
     display: flex;
@@ -36,11 +36,13 @@ body {
     padding: 20px;
 }
 
+/* TITLE */
 h1 {
     font-size: 42px;
     text-shadow: 0 0 20px #ff1493;
 }
 
+/* TEXT */
 p {
     font-size: 18px;
     max-width: 600px;
@@ -70,7 +72,21 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* LOVE LETTER OVERLAY */
+/* INPUT */
+input {
+    margin-top: 15px;
+}
+
+/* IMAGE */
+img {
+    width: 250px;
+    margin-top: 15px;
+    border-radius: 15px;
+    display: none;
+    box-shadow: 0 0 20px #ff1493;
+}
+
+/* LOVE LETTER */
 #letter {
     position: fixed;
     width: 100%;
@@ -79,8 +95,6 @@ button:hover {
     display: none;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    padding: 20px;
 }
 
 #letterBox {
@@ -95,36 +109,45 @@ button:hover {
 
 <body>
 
-<!-- CINEMATIC VIDEO BACKGROUND -->
+<!-- BACKGROUND VIDEO -->
 <video autoplay muted loop id="bgVideo">
     <source src="love.mp4" type="video/mp4">
 </video>
 
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <div class="container">
+
     <h1>💖 Our Cinematic Love Story 💖</h1>
+
     <p>
         Every moment with you feels like a movie…  
         a story I never want to end ❤️
     </p>
 
     <button onclick="openLetter()">💌 Open Love Letter</button>
+
+    <!-- UPLOAD -->
+    <input type="file" id="photo">
+
+    <button onclick="uploadImage()">Upload Memory ❤️</button>
+
+    <img id="preview">
+
 </div>
 
-<!-- LETTER -->
+<!-- LOVE LETTER -->
 <div id="letter" onclick="closeLetter()">
     <div id="letterBox">
         <h2>To My Love ❤️</h2>
         <p>
-            You are not just a part of my life…  
-            you are my entire story, my happiness, my forever.  
-            No matter where life goes, I will always choose you. ❤️
+            You are my happiness, my peace, my forever.  
+            No matter what happens, I will always choose you ❤️
         </p>
-        <br>
         <small>(Click anywhere to close)</small>
     </div>
 </div>
 
+<!-- SCRIPT -->
 <script>
 function openLetter() {
     document.getElementById("letter").style.display = "flex";
@@ -132,6 +155,38 @@ function openLetter() {
 
 function closeLetter() {
     document.getElementById("letter").style.display = "none";
+}
+
+/* CLOUDINARY SETUP */
+const cloudName = "cccw6q8r";
+const uploadPreset = "ml_upload";
+
+function uploadImage() {
+    const file = document.getElementById("photo").files[0];
+
+    if (!file) {
+        alert("Please select an image ❤️");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", uploadPreset);
+
+    fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("preview").src = data.secure_url;
+        document.getElementById("preview").style.display = "block";
+        alert("Upload Successful ❤️");
+    })
+    .catch(err => {
+        console.log(err);
+        alert("Upload Failed ❌");
+    });
 }
 </script>
 
